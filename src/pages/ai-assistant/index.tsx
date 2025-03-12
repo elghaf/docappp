@@ -111,28 +111,7 @@ const AIAssistantPage = () => {
   };
 
   // Suggested prompts
-  const suggestions: Suggestion[] = [
-    {
-      id: "1",
-      text: "Help me diagnose a patient with persistent cough, fatigue, and mild fever",
-      icon: <Stethoscope className="h-4 w-4" />,
-    },
-    {
-      id: "2",
-      text: "Suggest treatment options for Type 2 Diabetes with HbA1c of 7.8%",
-      icon: <Pill className="h-4 w-4" />,
-    },
-    {
-      id: "3",
-      text: "Interpret these lab results: ALT 65, AST 72, LDL 145, HDL 38, Glucose 118",
-      icon: <Clipboard className="h-4 w-4" />,
-    },
-    {
-      id: "4",
-      text: "Generate a patient education handout about hypertension management",
-      icon: <FileText className="h-4 w-4" />,
-    },
-  ];
+  const suggestions: Suggestion[] = [];
 
   return (
     <DashboardLayout>

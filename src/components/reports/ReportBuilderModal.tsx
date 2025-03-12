@@ -77,7 +77,7 @@ const ReportBuilderModal = ({
     "template" | "edit" | "preview"
   >("template");
   const [selectedTemplateId, setSelectedTemplateId] = useState<string>("");
-  const [reportTitle, setReportTitle] = useState<string>("Medical Report");
+  const [reportTitle, setReportTitle] = useState<string>("");
   const [reportContent, setReportContent] = useState<string>("");
 
   const handleSelectTemplate = (templateId: string) => {

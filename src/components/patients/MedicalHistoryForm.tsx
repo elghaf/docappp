@@ -105,31 +105,9 @@ const MedicalHistoryForm = ({
   onCancel = () => {},
 }: MedicalHistoryFormProps) => {
   const defaultValues: FormValues = {
-    conditions: [
-      {
-        name: "",
-        diagnosedDate: format(new Date(), "yyyy-MM-dd"),
-        status: "active",
-        notes: "",
-      },
-    ],
-    allergies: [
-      {
-        allergen: "",
-        severity: "mild",
-        reaction: "",
-        diagnosedDate: format(new Date(), "yyyy-MM-dd"),
-      },
-    ],
-    surgeries: [
-      {
-        procedure: "",
-        date: format(new Date(), "yyyy-MM-dd"),
-        hospital: "",
-        surgeon: "",
-        notes: "",
-      },
-    ],
+    conditions: [],
+    allergies: [],
+    surgeries: [],
     familyHistory: {
       heartDisease: false,
       diabetes: false,
@@ -140,9 +118,9 @@ const MedicalHistoryForm = ({
       other: "",
     },
     lifestyle: {
-      smoking: "never",
-      alcohol: "none",
-      exercise: "none",
+      smoking: undefined,
+      alcohol: undefined,
+      exercise: undefined,
       diet: "",
     },
   };

@@ -39,54 +39,7 @@ const AppointmentsSection = ({
   onScheduleAppointment = () => {},
 }: AppointmentsSectionProps) => {
   // Default appointments if none are provided
-  const defaultAppointments: Appointment[] = [
-    {
-      id: "1",
-      patientName: "Sarah Johnson",
-      patientId: "P12345",
-      date: addDays(new Date(), 0), // Today
-      time: "10:30 AM",
-      duration: 30,
-      type: "Follow-up",
-      status: "confirmed",
-      notes: "Blood pressure check",
-      hasPreVisitNotification: true,
-    },
-    {
-      id: "2",
-      patientName: "Michael Chen",
-      patientId: "P23456",
-      date: addDays(new Date(), 1), // Tomorrow
-      time: "2:15 PM",
-      duration: 45,
-      type: "Initial Consultation",
-      status: "scheduled",
-      hasPreVisitNotification: false,
-    },
-    {
-      id: "3",
-      patientName: "Emily Rodriguez",
-      patientId: "P34567",
-      date: addDays(new Date(), 2),
-      time: "9:00 AM",
-      duration: 60,
-      type: "Annual Physical",
-      status: "scheduled",
-      notes: "Fasting required for blood work",
-      hasPreVisitNotification: true,
-    },
-    {
-      id: "4",
-      patientName: "David Wilson",
-      patientId: "P45678",
-      date: addDays(new Date(), 3),
-      time: "11:45 AM",
-      duration: 30,
-      type: "Follow-up",
-      status: "scheduled",
-      hasPreVisitNotification: false,
-    },
-  ];
+  const defaultAppointments: Appointment[] = [];
 
   const appointments = providedAppointments || defaultAppointments;
 

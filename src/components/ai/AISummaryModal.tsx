@@ -63,9 +63,7 @@ const AISummaryModal = ({
   onClose = () => {},
 }: AISummaryModalProps) => {
   const [activeTab, setActiveTab] = useState("generate");
-  const [prompt, setPrompt] = useState(
-    `Generate a comprehensive medical summary for patient ${patientName} based on their recent visit data and medical history.`,
-  );
+  const [prompt, setPrompt] = useState("");
   const [modelType, setModelType] = useState("gpt-4");
   const [summaryType, setSummaryType] = useState("comprehensive");
   const [isGenerating, setIsGenerating] = useState(false);
@@ -103,9 +101,31 @@ const AISummaryModal = ({
     setTimeout(() => setCopiedTreatment(false), 2000);
   };
 
-  const handleSave = () => {
-    onSaveSummary(generatedSummary);
-    onClose();
+  const handleSave = async () => {
+    try {
+      // Save the summary to Supabase using the edge function
+      const { supabase } = await import("@/lib/supabase");
+
+      const { data, error } = await supabase.functions.invoke(
+        "supabase-functions-save-patient-summary",
+        {
+          body: {
+            patientId: patientId,
+            summary: generatedSummary,
+            status: "active",
+          },
+        },
+      );
+
+      if (error) throw error;
+
+      // Call the onSaveSummary callback with the generated summary
+      onSaveSummary(generatedSummary);
+      onClose();
+    } catch (error) {
+      console.error("Error saving summary:", error);
+      // You could add error handling UI here
+    }
   };
 
   return (

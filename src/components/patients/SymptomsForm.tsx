@@ -47,17 +47,7 @@ const SymptomsForm: React.FC<SymptomsFormProps> = ({
   initialSymptoms = [],
 }) => {
   const [symptoms, setSymptoms] = useState<Symptom[]>(
-    initialSymptoms.length > 0
-      ? initialSymptoms
-      : [
-          {
-            id: "1",
-            name: "Headache",
-            severity: 6,
-            duration: "3 days",
-            notes: "Worse in the morning",
-          },
-        ],
+    initialSymptoms.length > 0 ? initialSymptoms : [],
   );
   const [newSymptom, setNewSymptom] = useState("");
   const [currentSymptom, setCurrentSymptom] = useState<Symptom | null>(null);
@@ -107,9 +97,33 @@ const SymptomsForm: React.FC<SymptomsFormProps> = ({
     setCurrentSymptom(updated);
   };
 
-  const handleSave = () => {
-    onSave(symptoms);
-    onNext();
+  const handleSave = async () => {
+    try {
+      // If patientId is provided, save symptoms to the database
+      if (patientId) {
+        const { supabase } = await import("@/lib/supabase");
+
+        // Save symptoms using the edge function
+        const { data, error } = await supabase.functions.invoke(
+          "supabase-functions-save-symptoms",
+          {
+            body: {
+              patientId,
+              symptoms,
+            },
+          },
+        );
+
+        if (error) throw error;
+      }
+
+      // Call the onSave callback with the symptoms data
+      onSave(symptoms);
+      if (onNext) onNext();
+    } catch (error) {
+      console.error("Error saving symptoms:", error);
+      // You could add error handling UI here
+    }
   };
 
   const getSeverityLabel = (severity: number) => {

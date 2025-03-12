@@ -138,14 +138,15 @@ const AppointmentModal = ({
 
   const defaultValues: Partial<AppointmentFormValues> = {
     patientId: appointment?.patientId || "",
-    date: appointment?.date || new Date(),
-    time: appointment?.time || "09:00",
-    duration: appointment?.duration || 30,
-    type: appointment?.type || "follow-up",
+    date: appointment?.date || undefined,
+    time: appointment?.time || "",
+    duration: appointment?.duration || undefined,
+    type: appointment?.type || "",
     notes: appointment?.notes || "",
     status: appointment?.status || "scheduled",
     sendPreVisitNotification: appointment?.sendPreVisitNotification || false,
-    preVisitNotificationTime: appointment?.preVisitNotificationTime || 24,
+    preVisitNotificationTime:
+      appointment?.preVisitNotificationTime || undefined,
     preVisitIncludeDetails: appointment?.preVisitIncludeDetails || false,
   };
 

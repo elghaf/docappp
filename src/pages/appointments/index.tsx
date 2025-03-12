@@ -111,68 +111,7 @@ const AppointmentsPage = () => {
   };
 
   // Mock data for demonstration
-  const mockAppointments: Appointment[] = [
-    {
-      id: "1",
-      patient_id: "1",
-      patient_name: "Sarah Johnson",
-      date: "2024-06-20",
-      time: "10:30",
-      duration: 30,
-      type: "follow-up",
-      status: "confirmed",
-      notes: "Blood pressure check",
-      send_pre_visit_notification: true,
-    },
-    {
-      id: "2",
-      patient_id: "2",
-      patient_name: "Michael Chen",
-      date: "2024-06-21",
-      time: "14:15",
-      duration: 45,
-      type: "initial",
-      status: "scheduled",
-      notes: "",
-      send_pre_visit_notification: false,
-    },
-    {
-      id: "3",
-      patient_id: "3",
-      patient_name: "Emily Rodriguez",
-      date: "2024-06-22",
-      time: "09:00",
-      duration: 60,
-      type: "physical",
-      status: "scheduled",
-      notes: "Annual physical examination",
-      send_pre_visit_notification: true,
-    },
-    {
-      id: "4",
-      patient_id: "4",
-      patient_name: "David Wilson",
-      date: "2024-06-19",
-      time: "11:45",
-      duration: 30,
-      type: "follow-up",
-      status: "completed",
-      notes: "Follow-up for medication adjustment",
-      send_pre_visit_notification: false,
-    },
-    {
-      id: "5",
-      patient_id: "5",
-      patient_name: "Jessica Brown",
-      date: "2024-06-18",
-      time: "15:30",
-      duration: 30,
-      type: "urgent",
-      status: "cancelled",
-      notes: "Patient called to cancel",
-      send_pre_visit_notification: false,
-    },
-  ];
+  const mockAppointments: Appointment[] = [];
 
   const displayAppointments =
     appointments.length > 0 ? appointments : mockAppointments;

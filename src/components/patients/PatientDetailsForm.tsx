@@ -94,7 +94,7 @@ const PatientDetailsForm = ({
     defaultValues: defaultValues || {
       firstName: "",
       lastName: "",
-      dateOfBirth: new Date(1990, 0, 1),
+      dateOfBirth: undefined,
       gender: "",
       email: "",
       phone: "",

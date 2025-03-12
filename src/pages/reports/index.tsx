@@ -82,53 +82,7 @@ const ReportsPage = () => {
   };
 
   // Mock data for demonstration
-  const mockReports: Report[] = [
-    {
-      id: "1",
-      title: "Annual Physical Examination",
-      patient_id: "1",
-      patient_name: "Sarah Johnson",
-      created_at: "2023-11-15T10:30:00Z",
-      type: "physical",
-      status: "final",
-    },
-    {
-      id: "2",
-      title: "Blood Work Analysis",
-      patient_id: "2",
-      patient_name: "Michael Chen",
-      created_at: "2023-12-03T14:15:00Z",
-      type: "lab",
-      status: "final",
-    },
-    {
-      id: "3",
-      title: "Treatment Plan",
-      patient_id: "3",
-      patient_name: "Emily Rodriguez",
-      created_at: "2024-01-10T09:00:00Z",
-      type: "treatment",
-      status: "draft",
-    },
-    {
-      id: "4",
-      title: "Medication Review",
-      patient_id: "4",
-      patient_name: "David Wilson",
-      created_at: "2024-02-22T11:45:00Z",
-      type: "medication",
-      status: "final",
-    },
-    {
-      id: "5",
-      title: "Follow-up Consultation",
-      patient_id: "5",
-      patient_name: "Jessica Brown",
-      created_at: "2024-03-05T15:30:00Z",
-      type: "consultation",
-      status: "draft",
-    },
-  ];
+  const mockReports: Report[] = [];
 
   const filteredReports =
     activeTab === "all"

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
 import Sidebar from "@/components/layout/Sidebar";
 import Header from "@/components/layout/Header";
@@ -9,30 +9,35 @@ interface DashboardLayoutProps {
 
 const DashboardLayout = ({ children }: DashboardLayoutProps) => {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   const handleToggleSidebar = () => {
     setSidebarCollapsed(!sidebarCollapsed);
   };
 
   return (
-    <div className="flex h-screen bg-gray-100">
+    <div className="flex h-screen bg-gray-100 relative">
       {/* Sidebar */}
-      <Sidebar collapsed={sidebarCollapsed} onToggle={handleToggleSidebar} />
+      {isMounted && (
+        <Sidebar collapsed={sidebarCollapsed} onToggle={handleToggleSidebar} />
+      )}
 
       {/* Main Content */}
-      <div className="flex flex-col flex-1 overflow-hidden">
+      <div
+        className={cn(
+          "flex flex-col flex-1 overflow-hidden transition-all duration-300",
+          sidebarCollapsed ? "ml-[70px]" : "ml-[280px]",
+        )}
+      >
         {/* Header */}
         <Header />
 
         {/* Page Content */}
-        <main
-          className={cn(
-            "flex-1 overflow-y-auto p-6 transition-all duration-300",
-            sidebarCollapsed ? "ml-[70px]" : "ml-[280px]",
-          )}
-        >
-          {children}
-        </main>
+        <main className="flex-1 overflow-y-auto p-6">{children}</main>
       </div>
     </div>
   );

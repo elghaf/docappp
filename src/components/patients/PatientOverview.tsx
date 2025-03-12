@@ -130,6 +130,7 @@ const Medication = ({
 };
 
 interface PatientOverviewProps {
+  patientId?: string;
   patient?: {
     name: string;
     age: number;
@@ -148,7 +149,7 @@ interface PatientOverviewProps {
   };
 }
 
-const PatientOverview = ({ patient }: PatientOverviewProps) => {
+const PatientOverview = ({ patientId, patient }: PatientOverviewProps) => {
   // Default data if no patient is provided
   const defaultPatient = {
     name: "Jane Doe",

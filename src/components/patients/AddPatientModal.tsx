@@ -99,7 +99,7 @@ const AddPatientModal = ({
 }: AddPatientModalProps) => {
   const [currentStep, setCurrentStep] = useState(1);
   const [isDialogOpen, setIsDialogOpen] = useState(open);
-  const [progress, setProgress] = useState(33);
+  const [progress, setProgress] = useState(0);
 
   // Form data state
   const [patientDetails, setPatientDetails] =
@@ -169,11 +169,62 @@ const AddPatientModal = ({
     setIsSubmitting(true);
 
     try {
-      // In a real implementation, we would save to the database here
-      // For now, we'll simulate an API call with a timeout
-      await new Promise((resolve) => setTimeout(resolve, 1500));
-
       if (patientDetails && medicalHistory) {
+        // Save patient details to Supabase
+        const { createPatient, createMedicalHistory } = await import(
+          "@/lib/supabase"
+        );
+
+        // Format the patient data for the database
+        const patientData = {
+          first_name: patientDetails.firstName,
+          last_name: patientDetails.lastName,
+          date_of_birth: patientDetails.dateOfBirth.toISOString().split("T")[0],
+          gender: patientDetails.gender,
+          email: patientDetails.email || null,
+          phone: patientDetails.phone,
+          address: patientDetails.address || null,
+          city: patientDetails.city || null,
+          state: patientDetails.state || null,
+          zip_code: patientDetails.zipCode || null,
+          insurance_provider: patientDetails.insuranceProvider || null,
+          insurance_number: patientDetails.insuranceNumber || null,
+          emergency_contact_name: patientDetails.emergencyContactName || null,
+          emergency_contact_phone: patientDetails.emergencyContactPhone || null,
+          notes: patientDetails.notes || null,
+          blood_type: patientDetails.bloodType || null,
+          status: "active",
+        };
+
+        // Create the patient record
+        const newPatient = await createPatient(patientData);
+
+        // Format the medical history data
+        const medicalHistoryData = {
+          patient_id: newPatient.id,
+          conditions: medicalHistory.conditions || [],
+          allergies: medicalHistory.allergies || [],
+          surgeries: medicalHistory.surgeries || [],
+          family_history: medicalHistory.familyHistory || {},
+          lifestyle: medicalHistory.lifestyle || {},
+        };
+
+        // Create the medical history record
+        await createMedicalHistory(medicalHistoryData);
+
+        // Save symptoms if any
+        if (symptoms.length > 0) {
+          const { supabase } = await import("@/lib/supabase");
+
+          // Save symptoms using the edge function
+          await supabase.functions.invoke("supabase-functions-save-symptoms", {
+            body: {
+              patientId: newPatient.id,
+              symptoms,
+            },
+          });
+        }
+
         // Call the onPatientAdded callback with the complete patient data
         onPatientAdded({
           details: patientDetails,

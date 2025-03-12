@@ -520,21 +520,21 @@ const ReportEditor = ({
 function getDefaultContent(patientData: PatientData): string {
   return `# Medical Report
 
-Patient: ${patientData.name}
-Age: ${patientData.age}
-Gender: ${patientData.gender}
+Patient: 
+Age: 
+Gender: 
 Date: ${new Date().toLocaleDateString()}
 
 ## Current Diagnosis
-${patientData.diagnosis.join(", ")}
+
 
 ## Medications
-${patientData.medications.map((med) => `- ${med.name} ${med.dosage} ${med.frequency}`).join("\n")}
+
 
 ## Vitals
-- Blood Pressure: ${patientData.vitals.bloodPressure}
-- Heart Rate: ${patientData.vitals.heartRate} bpm
-- Temperature: ${patientData.vitals.temperature}°F
+- Blood Pressure: 
+- Heart Rate: 
+- Temperature: 
 
 ## Assessment
 

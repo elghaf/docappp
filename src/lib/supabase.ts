@@ -19,6 +19,29 @@ export async function getPatients() {
   return data;
 }
 
+// Patient Summaries
+export async function getPatientSummaries(patientId: string) {
+  const { data, error } = await supabase
+    .from("patient_summaries")
+    .select("*")
+    .eq("patient_id", patientId)
+    .order("created_at", { ascending: false });
+  if (error) throw error;
+  return data;
+}
+
+export async function savePatientSummary(patientId: string, summary: string) {
+  const { data, error } = await supabase
+    .from("patient_summaries")
+    .insert({
+      patient_id: patientId,
+      summary,
+    })
+    .select();
+  if (error) throw error;
+  return data[0];
+}
+
 export async function getPatientById(id: string) {
   const { data, error } = await supabase
     .from("patients")
@@ -123,4 +146,44 @@ export async function createReport(reportData: any) {
     .select();
   if (error) throw error;
   return data[0];
+}
+
+// Visits
+export async function getVisitsByPatientId(patientId: string) {
+  const { data, error } = await supabase
+    .from("visits")
+    .select("*")
+    .eq("patient_id", patientId)
+    .order("visit_date", { ascending: false });
+  if (error) throw error;
+  return data;
+}
+
+export async function createVisit(visitData: any) {
+  const { data, error } = await supabase
+    .from("visits")
+    .insert(visitData)
+    .select();
+  if (error) throw error;
+  return data[0];
+}
+
+// Symptoms
+export async function getSymptomsByPatientId(patientId: string) {
+  const { data, error } = await supabase
+    .from("symptoms")
+    .select("*")
+    .eq("patient_id", patientId)
+    .order("recorded_at", { ascending: false });
+  if (error) throw error;
+  return data;
+}
+
+export async function createSymptoms(symptomsData: any[]) {
+  const { data, error } = await supabase
+    .from("symptoms")
+    .insert(symptomsData)
+    .select();
+  if (error) throw error;
+  return data;
 }

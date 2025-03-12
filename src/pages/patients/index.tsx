@@ -98,63 +98,7 @@ const PatientsPage = () => {
   };
 
   // Mock data for demonstration
-  const mockPatients: Patient[] = [
-    {
-      id: "1",
-      first_name: "Sarah",
-      last_name: "Johnson",
-      date_of_birth: "1980-05-15",
-      gender: "Female",
-      phone: "(555) 123-4567",
-      email: "sarah.johnson@example.com",
-      last_visit: "2023-12-15",
-      next_appointment: "2024-06-20",
-      status: "active",
-    },
-    {
-      id: "2",
-      first_name: "Michael",
-      last_name: "Chen",
-      date_of_birth: "1975-08-22",
-      gender: "Male",
-      phone: "(555) 987-6543",
-      email: "michael.chen@example.com",
-      last_visit: "2024-01-05",
-      status: "active",
-    },
-    {
-      id: "3",
-      first_name: "Emily",
-      last_name: "Rodriguez",
-      date_of_birth: "1992-03-10",
-      gender: "Female",
-      phone: "(555) 456-7890",
-      email: "emily.rodriguez@example.com",
-      last_visit: "2024-01-22",
-      next_appointment: "2024-07-15",
-      status: "active",
-    },
-    {
-      id: "4",
-      first_name: "David",
-      last_name: "Wilson",
-      date_of_birth: "1968-11-30",
-      gender: "Male",
-      phone: "(555) 234-5678",
-      last_visit: "2023-11-30",
-      status: "inactive",
-    },
-    {
-      id: "5",
-      first_name: "Jessica",
-      last_name: "Brown",
-      date_of_birth: "1988-07-14",
-      gender: "Female",
-      phone: "(555) 876-5432",
-      email: "jessica.brown@example.com",
-      status: "pending",
-    },
-  ];
+  const mockPatients: Patient[] = [];
 
   const displayPatients = patients.length > 0 ? patients : mockPatients;
 

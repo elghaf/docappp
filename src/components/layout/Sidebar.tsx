@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -30,6 +30,11 @@ interface SidebarProps {
 const Sidebar = ({ collapsed = false, onToggle = () => {} }: SidebarProps) => {
   const location = useLocation();
   const [isCollapsed, setIsCollapsed] = useState(collapsed);
+
+  // Update local state when prop changes
+  useEffect(() => {
+    setIsCollapsed(collapsed);
+  }, [collapsed]);
 
   const toggleSidebar = () => {
     setIsCollapsed(!isCollapsed);
@@ -84,7 +89,7 @@ const Sidebar = ({ collapsed = false, onToggle = () => {} }: SidebarProps) => {
   return (
     <div
       className={cn(
-        "h-full bg-white border-r border-gray-200 transition-all duration-300 flex flex-col",
+        "h-full bg-white border-r border-gray-200 transition-all duration-300 flex flex-col fixed left-0 top-0 z-40",
         isCollapsed ? "w-[70px]" : "w-[280px]",
       )}
     >

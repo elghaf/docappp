@@ -10,6 +10,9 @@ import {
   getMedicalHistoryByPatientId,
   getAppointmentsByPatientId,
   getReportsByPatientId,
+  getVisitsByPatientId,
+  getSymptomsByPatientId,
+  getPatientSummaries,
 } from "@/lib/supabase";
 
 type PatientContextType = {
@@ -18,12 +21,17 @@ type PatientContextType = {
   appointments: any[];
   reports: any[];
   visits: any[];
+  symptoms: any[];
+  summaries: any[];
   loading: boolean;
   error: string | null;
   refreshPatient: (id: string) => Promise<void>;
   refreshMedicalHistory: (patientId: string) => Promise<void>;
   refreshAppointments: (patientId: string) => Promise<void>;
   refreshReports: (patientId: string) => Promise<void>;
+  refreshVisits: (patientId: string) => Promise<void>;
+  refreshSymptoms: (patientId: string) => Promise<void>;
+  refreshSummaries: (patientId: string) => Promise<void>;
 };
 
 const PatientContext = createContext<PatientContextType | undefined>(undefined);
@@ -40,6 +48,8 @@ export function PatientProvider({
   const [appointments, setAppointments] = useState<any[]>([]);
   const [reports, setReports] = useState<any[]>([]);
   const [visits, setVisits] = useState<any[]>([]);
+  const [symptoms, setSymptoms] = useState<any[]>([]);
+  const [summaries, setSummaries] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -99,12 +109,57 @@ export function PatientProvider({
     }
   };
 
+  const refreshVisits = async (patientId: string) => {
+    try {
+      setLoading(true);
+      setError(null);
+      const visitsData = await getVisitsByPatientId(patientId);
+      setVisits(visitsData);
+    } catch (err) {
+      setError("Failed to load visits");
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const refreshSymptoms = async (patientId: string) => {
+    try {
+      setLoading(true);
+      setError(null);
+      const symptomsData = await getSymptomsByPatientId(patientId);
+      setSymptoms(symptomsData);
+    } catch (err) {
+      setError("Failed to load symptoms");
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const refreshSummaries = async (patientId: string) => {
+    try {
+      setLoading(true);
+      setError(null);
+      const summariesData = await getPatientSummaries(patientId);
+      setSummaries(summariesData);
+    } catch (err) {
+      setError("Failed to load patient summaries");
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
     if (patientId) {
       refreshPatient(patientId);
       refreshMedicalHistory(patientId);
       refreshAppointments(patientId);
       refreshReports(patientId);
+      refreshVisits(patientId);
+      refreshSymptoms(patientId);
+      refreshSummaries(patientId);
     }
   }, [patientId]);
 
@@ -116,12 +171,17 @@ export function PatientProvider({
         appointments,
         reports,
         visits,
+        symptoms,
+        summaries,
         loading,
         error,
         refreshPatient,
         refreshMedicalHistory,
         refreshAppointments,
         refreshReports,
+        refreshVisits,
+        refreshSymptoms,
+        refreshSummaries,
       }}
     >
       {children}

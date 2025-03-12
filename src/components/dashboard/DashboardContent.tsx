@@ -43,32 +43,32 @@ const DashboardContent = ({
   const statistics = [
     {
       title: "Total Patients",
-      value: "248",
-      change: "+12%",
+      value: "0",
+      change: "0%",
       trend: "up",
       period: "from last month",
       icon: <Users className="h-5 w-5 text-blue-500" />,
     },
     {
       title: "Appointments",
-      value: "42",
-      change: "+8%",
+      value: "0",
+      change: "0%",
       trend: "up",
       period: "this week",
       icon: <Calendar className="h-5 w-5 text-purple-500" />,
     },
     {
       title: "Reports Generated",
-      value: "18",
-      change: "-5%",
-      trend: "down",
+      value: "0",
+      change: "0%",
+      trend: "up",
       period: "this month",
       icon: <Activity className="h-5 w-5 text-green-500" />,
     },
     {
       title: "Patient Satisfaction",
-      value: "94%",
-      change: "+2%",
+      value: "0%",
+      change: "0%",
       trend: "up",
       period: "from last quarter",
       icon: <TrendingUp className="h-5 w-5 text-amber-500" />,
@@ -76,48 +76,7 @@ const DashboardContent = ({
   ];
 
   // Mock data for recent patients
-  const recentPatients = [
-    {
-      id: "p1",
-      name: "Jane Smith",
-      age: 42,
-      lastVisit: "2023-05-15",
-      condition: "Hypertension",
-      status: "stable",
-    },
-    {
-      id: "p2",
-      name: "Michael Johnson",
-      age: 58,
-      lastVisit: "2023-05-12",
-      condition: "Type 2 Diabetes",
-      status: "improving",
-    },
-    {
-      id: "p3",
-      name: "Emily Davis",
-      age: 35,
-      lastVisit: "2023-05-10",
-      condition: "Pregnancy",
-      status: "monitoring",
-    },
-    {
-      id: "p4",
-      name: "Robert Wilson",
-      age: 67,
-      lastVisit: "2023-05-08",
-      condition: "Arthritis",
-      status: "stable",
-    },
-    {
-      id: "p5",
-      name: "Sophia Martinez",
-      age: 29,
-      lastVisit: "2023-05-05",
-      condition: "Migraine",
-      status: "improving",
-    },
-  ];
+  const recentPatients = [];
 
   const getStatusColor = (status: string) => {
     switch (status) {
