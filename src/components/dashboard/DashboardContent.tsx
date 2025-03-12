@@ -13,6 +13,8 @@ import {
 
 import AppointmentsSection from "./AppointmentsSection";
 import QuickActionsSection from "./QuickActionsSection";
+import PatientSummarySection from "./PatientSummarySection";
+import WorkflowStatusCard from "./WorkflowStatusCard";
 
 interface DashboardContentProps {
   onAddPatient?: () => void;
@@ -24,6 +26,7 @@ interface DashboardContentProps {
   onViewAllAppointments?: () => void;
   onViewPatient?: (id: string) => void;
   onViewAppointment?: (id: string) => void;
+  onViewAllWorkflows?: () => void;
 }
 
 const DashboardContent = ({
@@ -36,6 +39,7 @@ const DashboardContent = ({
   onViewAllAppointments = () => {},
   onViewPatient = () => {},
   onViewAppointment = () => {},
+  onViewAllWorkflows = () => {},
 }: DashboardContentProps) => {
   const [activeTab, setActiveTab] = useState("overview");
 
@@ -75,24 +79,6 @@ const DashboardContent = ({
     },
   ];
 
-  // Mock data for recent patients
-  const recentPatients = [];
-
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case "stable":
-        return "bg-green-100 text-green-800 border-green-200";
-      case "improving":
-        return "bg-blue-100 text-blue-800 border-blue-200";
-      case "monitoring":
-        return "bg-amber-100 text-amber-800 border-amber-200";
-      case "critical":
-        return "bg-red-100 text-red-800 border-red-200";
-      default:
-        return "bg-gray-100 text-gray-800 border-gray-200";
-    }
-  };
-
   return (
     <div className="w-full h-full bg-gray-50 p-6 overflow-auto">
       <div className="max-w-7xl mx-auto space-y-6">
@@ -128,95 +114,14 @@ const DashboardContent = ({
         {/* Main Content */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Left Column - Patient Summary */}
-          <div className="lg:col-span-2">
-            <Card className="bg-white">
-              <CardHeader className="pb-2">
-                <div className="flex justify-between items-center">
-                  <CardTitle>Recent Patients</CardTitle>
-                  <Button
-                    variant="ghost"
-                    className="text-sm flex items-center gap-1"
-                    onClick={onViewAllPatients}
-                  >
-                    View All <ChevronRight className="h-4 w-4" />
-                  </Button>
-                </div>
-              </CardHeader>
-              <CardContent>
-                <Tabs value={activeTab} onValueChange={setActiveTab}>
-                  <TabsList className="grid w-full grid-cols-2">
-                    <TabsTrigger value="overview">Overview</TabsTrigger>
-                    <TabsTrigger value="recent">Recent Patients</TabsTrigger>
-                  </TabsList>
-                  <TabsContent value="overview" className="pt-4">
-                    <div className="p-4 border rounded-md bg-gray-50 text-center">
-                      <Activity className="h-12 w-12 mx-auto text-gray-400 mb-2" />
-                      <h3 className="text-lg font-medium">Patient Overview</h3>
-                      <p className="text-sm text-gray-500 mt-1">
-                        Summary statistics and patient information will appear
-                        here
-                      </p>
-                    </div>
-                  </TabsContent>
-                  <TabsContent value="recent" className="pt-4">
-                    <div className="rounded-md border">
-                      <div className="overflow-hidden">
-                        <table className="w-full text-sm">
-                          <thead>
-                            <tr className="border-b bg-gray-50">
-                              <th className="py-3 px-4 text-left font-medium">
-                                Name
-                              </th>
-                              <th className="py-3 px-4 text-left font-medium">
-                                Age
-                              </th>
-                              <th className="py-3 px-4 text-left font-medium">
-                                Last Visit
-                              </th>
-                              <th className="py-3 px-4 text-left font-medium">
-                                Condition
-                              </th>
-                              <th className="py-3 px-4 text-left font-medium">
-                                Status
-                              </th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            {recentPatients.map((patient) => (
-                              <tr
-                                key={patient.id}
-                                className="border-b hover:bg-gray-50 cursor-pointer"
-                                onClick={() => onViewPatient(patient.id)}
-                              >
-                                <td className="py-3 px-4">{patient.name}</td>
-                                <td className="py-3 px-4">{patient.age}</td>
-                                <td className="py-3 px-4">
-                                  {new Date(
-                                    patient.lastVisit,
-                                  ).toLocaleDateString()}
-                                </td>
-                                <td className="py-3 px-4">
-                                  {patient.condition}
-                                </td>
-                                <td className="py-3 px-4">
-                                  <Badge
-                                    variant="outline"
-                                    className={getStatusColor(patient.status)}
-                                  >
-                                    {patient.status.charAt(0).toUpperCase() +
-                                      patient.status.slice(1)}
-                                  </Badge>
-                                </td>
-                              </tr>
-                            ))}
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
-                  </TabsContent>
-                </Tabs>
-              </CardContent>
-            </Card>
+          <div className="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6">
+            <PatientSummarySection
+              onViewAll={onViewAllPatients}
+              onViewPatient={onViewPatient}
+              onAddPatient={onAddPatient}
+            />
+
+            <WorkflowStatusCard onViewAll={onViewAllWorkflows} />
           </div>
 
           {/* Right Column - Appointments */}

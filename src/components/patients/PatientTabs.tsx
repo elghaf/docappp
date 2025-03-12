@@ -1,11 +1,18 @@
 import React, { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { FileText, ClipboardList, Calendar, Activity } from "lucide-react";
+import {
+  FileText,
+  ClipboardList,
+  Calendar,
+  Activity,
+  GitBranch,
+} from "lucide-react";
 
 import PatientOverview from "./PatientOverview";
 import MedicalHistoryTab from "./MedicalHistoryTab";
 import VisitsTab from "./VisitsTab";
 import ReportsTab from "./ReportsTab";
+import WorkflowTab from "./WorkflowTab";
 
 interface PatientTabsProps {
   patientId?: string;
@@ -33,7 +40,7 @@ const PatientTabs: React.FC<PatientTabsProps> = ({
         onValueChange={handleTabChange}
         className="w-full"
       >
-        <TabsList className="grid w-full grid-cols-4 mb-6">
+        <TabsList className="grid w-full grid-cols-5 mb-6">
           <TabsTrigger
             value="overview"
             className="flex items-center justify-center gap-2 py-3"
@@ -62,6 +69,13 @@ const PatientTabs: React.FC<PatientTabsProps> = ({
             <Activity className="h-4 w-4" />
             <span>Reports</span>
           </TabsTrigger>
+          <TabsTrigger
+            value="workflow"
+            className="flex items-center justify-center gap-2 py-3"
+          >
+            <GitBranch className="h-4 w-4" />
+            <span>Workflow</span>
+          </TabsTrigger>
         </TabsList>
 
         <TabsContent value="overview" className="mt-0">
@@ -78,6 +92,10 @@ const PatientTabs: React.FC<PatientTabsProps> = ({
 
         <TabsContent value="reports" className="mt-0">
           <ReportsTab patientId={patientId} />
+        </TabsContent>
+
+        <TabsContent value="workflow" className="mt-0">
+          <WorkflowTab patientId={patientId} />
         </TabsContent>
       </Tabs>
     </div>
